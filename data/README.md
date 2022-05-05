@@ -1,1 +1,1 @@
-Add your project's data to this folder.
+CIFAR-10 dataset.
