@@ -50,7 +50,7 @@ CIFAR-10 dataset is used in this research.
 
 ### 9.c. Software
 
-List softwate that you have identified and plan to use. Provide references (with full citation in the References section below).
+List softwate that you have identified and plan to use. Provide references (with full citation in the References section below). <br />
 Pytorch, Python, numpy
 
 ## 10. References
