@@ -45,7 +45,7 @@ It will all be implemented by Liang-Chien Liu.
 
 ### 9.b. Datasets
 
-List datasets that you have identified and plan to use. Provide references (with full citation in the References section below).
+List datasets that you have identified and plan to use. Provide references (with full citation in the References section below). <br />
 CIFAR-10 dataset is used in this research.
 
 ### 9.c. Software
