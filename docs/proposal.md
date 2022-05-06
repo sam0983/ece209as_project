@@ -2,11 +2,11 @@
 
 ## 1. Motivation & Objective
 
-What are you trying to do and why? (plain English without jargon)
+AIoT (Artiﬁcial Intelligence of Things) combines AI (Artiﬁcial Intelligence) and IoT (Internet of Things), AIoT can improve businesses and their services by creating more value out of IoT-generated data. However, there is often a trade-off between the cost and latency of transmitting data to the cloud and the accuracy of the edge device. The objective of my research project is to explore a method that may give us the best of both worlds, getting competitive accuracy while also keeping the cost and latency relatively low.
 
 ## 2. State of the Art & Its Limitations
 
-How is it done today, and what are the limits of current practice?
+My project is mainly comprised of two research components, which is DNN partitioning and model uncertainty quantification. One of the notable researches regarding DNN partitioning is "Neurosurgeon: Collaborative Intelligence Between the Cloud and Mobile Edge", which uses a lightweight scheduler to automatically partition DNN computation between mobile devices and datacenters at the granularity of neural network layers and finds the optimal layer to slice the computation. If I were to say that there is a limitation to DNN partitioning, it would be that it still sends all the intermediate data to the cloud, which may still cost a lot of money if there is a vast amount of data. For model uncertainty quantification,one of the state of the art methods is the Monte Carlo dropout, it uses dropout as a regularization term to compute the prediction uncertainty. Instead of its limitation, I would think that utilizing it smartly could help alleviate the limitation of DNN partitioning mentioned above.
 
 ## 3. Novelty & Rationale
 
