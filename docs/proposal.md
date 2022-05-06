@@ -31,8 +31,8 @@ There are multiple metrics to evaluate whether this system is performing well. T
 ## 8. Execution Plan
 
 There are three key tasks, and they are described in the following:
-1. Performind DNN partitioning and ensuring that the model still works accordingly after dividing it to the edge and the cloud.
-2. Adding the model uncertainty component to the edge and testing whether it is reliable.
+1. Performing DNN partitioning and ensuring that the model still works accordingly after dividing it to the edge and the cloud.
+2. Adding the model uncertainty component to the edge and testing its reliability.
 3. Training the edge segment and the cloud segment so that both ends could achieve optimal performance.
 
 It will all be implemented by Liang-Chien Liu.
