@@ -39,9 +39,14 @@ energy consumption, and high datacenter throughput for deep learning application
 # 2. Related Work
 
 # 3. Technical Approach
-The common wisdom is that computation resources of edge devices are limited, and cannot handle  large amount of computation with reasonable latency. As a result, edge-only approaches often use lightweight models (eg. SqueezeNet) but has less accuracy than that of deeper models (VGG-19, ResNet-152). Another problem with edge-only approaches is that even if the edge device is capable of heavy computation, the memory and latency of updating a new model to the edge can require large data transfers. For instance, with AlexNet, this would require 240MB of communication from the server to the edge. In contrast, cloud-only approaches avoid these issues, yet sending raw data such as images to the cloud can cost a significant amount of money due to its large memory size.
+[DNN partitioning]
+The common wisdom is that computation resources of edge devices are limited, and cannot handle  large amount of computation with reasonable latency. As a result, edge-only approaches often use lightweight models (eg. SqueezeNet) but has less accuracy than that of deeper models (VGG-19, ResNet-152). Another problem with edge-only approaches is that even if the edge device is capable of heavy computation, the memory and latency of updating a new model to the edge can require large data transfers. For instance, with AlexNet, this would require 240MB of communication from the server to the edge. In contrast, cloud-only approaches avoid these issues, yet sending raw data such as images to the cloud can cost a significant amount of money due to its large memory size. <br />
 Consequently, due to the fact that there is a tradeoff of memory size, latency, and accuracy between edge-only and cloud-only approaches, DNN partitioning is a solution that partially solves this problem. It is a feasible method that offloads some computation-intensive tasks to the cloud or edges. DNN partitioning slices the computations of the original DNN, meaning that the edge device will compute the first N layers of the DNN, whereas the cloud device will compute the rest of the layers as well as performining the final classification. The intermediate output of the Nth layer on the edge device is then sent to the cloud device through the TCP/IP protocol. Sending the intermediate output instead of the original raw data could also reduce the latency and memory size of data transmission. We will be conducting experiments by slicing the computation from different layers to obtain the optimal performance.
+<br />
 <img width="743" alt="Screen Shot 2022-06-03 at 4 22 39 PM" src="https://user-images.githubusercontent.com/56816585/171966138-46608f0f-4092-454f-8b8b-898ba05f87b0.png">
+<br />
+[Model Uncertainty Quantification]
+
 
 
 
