@@ -28,7 +28,10 @@ This section should cover the following items:
 # 3. Technical Approach
 
 # 4. Evaluation and Results
-
+slice from different layers and check th memory size being sent, and the data transmission time.
+tune uncertainty threshold.
+try deep ensemble and mc dropout and compare
+compute overall accuracy, overall memory sent.
 # 5. Discussion and Conclusions
 
 # 6. References
