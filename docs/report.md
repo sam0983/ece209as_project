@@ -39,6 +39,8 @@ energy consumption, and high datacenter throughput for deep learning application
 # 2. Related Work
 
 # 3. Technical Approach
+![image](https://user-images.githubusercontent.com/56816585/171964250-09e495ca-78bc-45ff-873b-ad6d28486e6c.png)
+
 
 # 4. Evaluation and Results
 slice from different layers and check th memory size being sent, and the data transmission time.
