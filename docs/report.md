@@ -68,11 +68,13 @@ As shown from the figure below, DNN parititioning is performed between conv3_1 a
 ![Screen Shot 2022-06-03 at 9 24 28 PM](https://user-images.githubusercontent.com/56816585/171982639-7ae299b1-33fb-4c8c-95a7-fc2505a03042.png)
 <br />
 Adjustments are made on the edge model to enable classification. For MC Dropout, a Dropout layer and a fully-connected layer is connected to conv3_1, where the model is then fine-tuned. Subsequently, The dropout layer is activated during inference to perform MC dropout for uncertainty quantification.
-If the uncertainty is within the threshold, we trust the edge model’s classification. The process is similar for Deep ensemble, where the only difference is that the same image is run on multiple seperate models instead of running one model multiple times. The edge models of MC Dropout and Deep Ensemble are shown below. <br />
-![Screen Shot 2022-06-03 at 9 34 52 PM](https://user-images.githubusercontent.com/56816585/171983110-dcaed852-ffcf-4121-ae8d-bff4964c9dfe.png)
-![Screen Shot 2022-06-03 at 9 35 06 PM](https://user-images.githubusercontent.com/56816585/171983115-dfdd621b-304b-44da-8253-6662eaf51476.png)
+If the uncertainty is within the threshold, we trust the edge model’s classification. The process is similar for Deep Ensemble, where the only difference is that the same image is run on multiple seperate models instead of running one model multiple times. The edge models of MC Dropout and Deep Ensemble are shown below. <br />
+ ![Screen Shot 2022-06-03 at 9 37 07 PM](https://user-images.githubusercontent.com/56816585/171983216-09e93350-7e42-49d0-a3d1-f675bb52a435.png)
+<br />
+If the uncertainty exceeds the threshold, it is deemed that the edge model is not confident with its classification , so the intermediate output of conv3_1 is sent to the cloud for a more reliable classification. The cloud model is also fine-tuned with the intermediate output of the edge model as its input. The way that this is done is by initializing the weights from conv1_1 to conv3_1 with the the learnt weights of the edge model, this segment is then frozen during finetuning. The rationale behind this is that if the weights from conv1_1 to conv3_1 is frozen during finetuning, the output of conv3_1 during training will be the same as that during inference. The overall system architecture is shown below. <br />
+![Screen Shot 2022-06-03 at 9 59 10 PM](https://user-images.githubusercontent.com/56816585/171983975-edc94f2c-64ed-4c1e-bd8c-f3cfe55c5443.png)
+<br />
 
- 
 
 # 4. Evaluation and Results
 slice from different layers and check th memory size being sent, and the data transmission time.
