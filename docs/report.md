@@ -78,10 +78,14 @@ If the uncertainty exceeds the threshold, it is deemed that the edge model is no
 
 
 # 4. Evaluation and Results
-slice from different layers and check th memory size being sent, and the data transmission time.
-tune uncertainty threshold.
-try deep ensemble and mc dropout and compare
-compute overall accuracy, overall memory sent.
+1. slice from different layers and check th memory size being sent, and the data transmission time.
+2. try deep ensemble and mc dropout and compare
+3. tune uncertainty threshold.
+4. compute overall accuracy, overall memory sent.\
+
+
+
+
 # 5. Discussion and Conclusions
 
 # 6. References
