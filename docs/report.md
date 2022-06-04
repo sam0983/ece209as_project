@@ -60,8 +60,19 @@ After obtaining multiple outputs either using MC Dropout of Deep Ensemble, we ca
 The epsilon in the equation prevents a division by 0, which is mathematically not defined. The result of this equation yields the model uncertainty. As previously mentioned, the higher the value, the more uncertain the model is.
 <br />
 [Deep Learning Model] <br />
-For this research, we employ the VGG-19 CNN architecture because it is a well documented and effective deep learning model for image classification, so it serves as a suitable DNN model to test our hypothesis.
+For this research, we employ the VGG19 CNN architecture because it is a well documented and effective deep learning model for image classification, so it serves as a suitable DNN model to test our hypothesis. It consists of 16 convolutional layers followed by two fully-connected layers, and finally a softmax layer for classification. The following figure shows the components of the VGG19. <br />
+![Screen Shot 2022-06-03 at 9 12 34 PM](https://user-images.githubusercontent.com/56816585/171982169-7f534479-dc88-4e3d-aef1-517a207bb448.png)
+<br />
+As shown from the figure below, DNN parititioning is performed between conv3_1 and conv3_2, indicating that the edge device is responsible for the computations from conv1_1 to conv3_1, whereas the cloud device computes conv3_2 to the softmax layer to output the final classfication results.
+<br />
+![Screen Shot 2022-06-03 at 9 24 28 PM](https://user-images.githubusercontent.com/56816585/171982639-7ae299b1-33fb-4c8c-95a7-fc2505a03042.png)
+<br />
+Adjustments are made on the edge model to enable classification. For MC Dropout, a Dropout layer and a fully-connected layer is connected to conv3_1, where the model is then fine-tuned. Subsequently, The dropout layer is activated during inference to perform MC dropout for uncertainty quantification.
+If the uncertainty is within the threshold, we trust the edge model’s classification. The process is similar for Deep ensemble, where the only difference is that the same image is run on multiple seperate models instead of running one model multiple times. The edge models of MC Dropout and Deep Ensemble are shown below. <br />
+![Screen Shot 2022-06-03 at 9 34 52 PM](https://user-images.githubusercontent.com/56816585/171983110-dcaed852-ffcf-4121-ae8d-bff4964c9dfe.png)
+![Screen Shot 2022-06-03 at 9 35 06 PM](https://user-images.githubusercontent.com/56816585/171983115-dfdd621b-304b-44da-8253-6662eaf51476.png)
 
+ 
 
 # 4. Evaluation and Results
 slice from different layers and check th memory size being sent, and the data transmission time.
