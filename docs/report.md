@@ -72,7 +72,8 @@ If the uncertainty is within the threshold, we trust the edge model’s classifi
  ![Screen Shot 2022-06-03 at 9 37 07 PM](https://user-images.githubusercontent.com/56816585/171983216-09e93350-7e42-49d0-a3d1-f675bb52a435.png)
 <br />
 If the uncertainty exceeds the threshold, it is deemed that the edge model is not confident with its classification , so the intermediate output of conv3_1 is sent to the cloud for a more reliable classification. The cloud model is also fine-tuned with the intermediate output of the edge model as its input. The way that this is done is by initializing the weights from conv1_1 to conv3_1 with the the learnt weights of the edge model, this segment is then frozen during finetuning. The rationale behind this is that if the weights from conv1_1 to conv3_1 is frozen during finetuning, the output of conv3_1 during training will be the same as that during inference. The overall system architecture is shown below. <br />
-![Screen Shot 2022-06-03 at 9 59 10 PM](https://user-images.githubusercontent.com/56816585/171983975-edc94f2c-64ed-4c1e-bd8c-f3cfe55c5443.png)
+![Screen Shot 2022-06-03 at 10 05 22 PM](https://user-images.githubusercontent.com/56816585/171984547-a128a466-180b-4797-81e3-0cf1fea28953.png)
+
 <br />
 
 
