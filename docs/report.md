@@ -128,13 +128,17 @@ layer (fc6) achieves the lowest latency, as marked in Figure 6a, improving 2.0×
 <br />
 [Model Finetuning] 
 <br />
-
+The target dataset used in this research is CIFAR-10, it consists of 60000 32x32 colour images in 10 classes, with 6000 images per class. There are 50000 training images and 10000 test images. The VGG19 is pretrained on ImageNet, this dataset spans 1000 object classes and contains 1,281,167 training images, 50,000 validation images and 100,000 test images. The reason is that CIFAR-10 is a relatively small dataset, and many studies have shown that pretraining on a much bigger dataset yields better transfer learning results, as the generalized feature representations are similar and therefore transferrable. first train whole model for baseline. then train edge model based on mc dropout of deep ensemble. then train the cloud model with intermediate output of edge model as input. compare it with the baseline.
 <br />
 [Deep Ensemble] 
 <br />
 Experiments are conducted to compare the performances of MC Dropout and Deep Ensemble. Since the logic of the sytem is to only send data to the cloud when uncertainty is higher than a threshold, the objective should be to keep the samples sent to the cloud as low as possible while maintaining the accuracy of the edge model. We develop a strategy for choosing the superior model uncertainty quantification method. By tuning the thresholds of both approaches so that the number of data sent to the cloud is approximately the same, the one with higher accuracy in "certain" classifications is the better method. The reason for this is because if model uncertainty is low yet the classifications are not accurate, it is an indication that the calculated model uncertainty is not reliable. The figure below compares the performance of MC Dropout and Deep Ensemble.
 <br />
 From these results, it is shown that MC Dropout has a more reliable method, as when both methods deem approximately 6000 data samples to be certain, the accuracy of these 6000 samples is 97% using MC Dropout, whereas it is 95% using Deep Ensemble. Another notable observation from this experiment is the trade-off between accuracy and the number of data sent to cloud. It is noticed that during parameter tuning, the higher the accuracy of model uncertainty quantification, the more data are seen as uncertain and sent to cloud, increasing data transmission.
+<br />
+[System Evaluation] 
+<br />
+
 
 # 5. Discussion and Conclusions
 
