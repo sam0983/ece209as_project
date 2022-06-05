@@ -78,13 +78,58 @@ If the uncertainty exceeds the threshold, it is deemed that the edge model is no
 
 
 # 4. Evaluation and Results
-1. slice from different layers and check th memory size being sent, and the data transmission time.
+1. slice from different layers and check the memory size being sent, and the data transmission time.
 2. try deep ensemble and mc dropout and compare
 3. tune uncertainty threshold.
 4. compute overall accuracy, overall memory sent.\
 
 
+<br />
+[Experimental Setup] 
+<br />
+The inference tests are all run on MacBook Air. Both the edge and cloud devices' codes are simultaneously implemented on the same MacBook. TCP/IP messaging protocal is utilized to transmit the intermediate output from the edge script to the cloud script. The data transmission is executed using Python's Pickle library as well as Socket programming. Model training is performed on Google Colab's GPU. Note that although the cloud and edge is run on Mac during inference, we automatically neglect the computation time of the cloud, as a lot of work have shown that the cloud GPU's computation time is so fast it's almost negligible.
+<br />
+[DNN Partitioning] 
+<br />
 
+We first investigate the data and computation characteristics of each layer in VGG19. These characteristics provide insights to identify a better computation partitioning between mobile and cloud at the layer level. The convolution (conv) and fully-connected layers (fc) are the most time-consuming layers, representing over 90% of the total execution time. Convolution layers in the middle (conv3 and conv4) takes longer to execute than the early convolution layers (conv1 and conv2). Larger number of filters are applied by the convolution layers later in the DNN to progressively extract more robust and representative features, increasing the amount of computation. On the other hand, fully-connected layers are up to one magnitude slower than the convolution layers in the network. The most timeconsuming layer is the layer fc6, a fully-connected layer deep in the DNN, taking 45% of the total execution time. <br />
+ The first three convolution
+layers (conv1, conv2 and conv3) generate large amounts of
+output data (shown as the largest dark bars) as they apply
+hundreds of filters over their input feature maps to extract
+interesting features. The data size stays constant through
+the activation layers (relu1 - relu5). The pooling layers
+sharply reduce the data size by up to 4.7× as they summarize
+regions of neighboring features by taking the maximum.
+The fully-connected layers deeper in the network (fc6 -
+fc8) gradually reduce the data size until the softmax layer
+(softmax) and argmax layer (argmax) at the end reduce the
+data to be one classification label.
+<img width="691" alt="Screen Shot 2022-06-04 at 6 15 58 PM" src="https://user-images.githubusercontent.com/56816585/172030841-5a6133fd-4167-4e2f-ada9-5327f39d3f64.png">
+Each bar in Figure 6a represents the end-to-end latency
+of AlexNet, partitioned after each layer. Similarly, each bar
+in Figure 6b represents the mobile energy consumption of
+Alexnet, partitioned after each layer. Partitioning computation after a specific layer means executing the DNN on the
+mobile up to that layer, transferring the output of that layer
+to the cloud via wireless network, and executing the remaining layers in the cloud. The leftmost bar represents sending the original input for cloud-only processing. As partition
+point moves from left to right, more layers are executed on
+the mobile device thus there is an increasingly larger mobile
+processing component. The rightmost bar is the latency of
+executing the entire DNN locally on the mobile device.
+Partition for Latency – If partitioning at the front-end, the
+data transfer dominates the end-to-end latency, which is consistent with our observation in Section 4.2 that the data size
+is the largest at the early stage of the DNN. Partitioning at the
+back-end provides better performance since the application
+can minimize the data transfer overhead, while taking advantage of the powerful server to execute the more computeheavy layers at the back-end. In the case of AlexNet using the mobile GPU and Wi-Fi, partitioning between the
+last pooling layer (pool5) and the first fully-connected
+layer (fc6) achieves the lowest latency, as marked in Figure 6a, improving 2.0× over cloud-only processing.
+
+<br />
+[Deep Ensemble] 
+<br />
+Experiments are conducted to compare the performances of MC Dropout and Deep Ensemble. Since the logic of the sytem is to only send data to the cloud when uncertainty is higher than a threshold, the objective should be to keep the samples sent to the cloud as low as possible while maintaining the accuracy of the edge model. We develop a strategy for choosing the superior model uncertainty quantification method. By tuning the thresholds of both approaches so that the number of data sent to the cloud is approximately the same, the one with higher accuracy in "certain" classifications is the better method. The reason for this is because if model uncertainty is low yet the classifications are not accurate, it is an indication that the calculated model uncertainty is not reliable. The figure below compares the performance of MC Dropout and Deep Ensemble.
+<br />
+From these results, it is shown that MC Dropout has a more reliable method, as when both methods deem approximately 6000 data samples to be certain, the accuracy of these 6000 samples is 97% using MC Dropout, whereas it is 95% using Deep Ensemble. Another notable observation from this experiment is the trade-off between accuracy and the number of data sent to cloud. It is noticed that during parameter tuning, the higher the accuracy of model uncertainty quantification, the more data are seen as uncertain and sent to cloud, increasing data transmission.
 
 # 5. Discussion and Conclusions
 
