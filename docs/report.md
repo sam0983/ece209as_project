@@ -105,7 +105,9 @@ The fully-connected layers deeper in the network (fc6 -
 fc8) gradually reduce the data size until the softmax layer
 (softmax) and argmax layer (argmax) at the end reduce the
 data to be one classification label.
+<br />
 <img width="691" alt="Screen Shot 2022-06-04 at 6 15 58 PM" src="https://user-images.githubusercontent.com/56816585/172030841-5a6133fd-4167-4e2f-ada9-5327f39d3f64.png">
+<br />
 Each bar in Figure 6a represents the end-to-end latency
 of AlexNet, partitioned after each layer. Similarly, each bar
 in Figure 6b represents the mobile energy consumption of
@@ -123,6 +125,9 @@ back-end provides better performance since the application
 can minimize the data transfer overhead, while taking advantage of the powerful server to execute the more computeheavy layers at the back-end. In the case of AlexNet using the mobile GPU and Wi-Fi, partitioning between the
 last pooling layer (pool5) and the first fully-connected
 layer (fc6) achieves the lowest latency, as marked in Figure 6a, improving 2.0× over cloud-only processing.
+<br />
+[Model Finetuning] 
+<br />
 
 <br />
 [Deep Ensemble] 
