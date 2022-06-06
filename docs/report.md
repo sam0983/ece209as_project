@@ -8,6 +8,7 @@
 * [References](#6-references)
 
 # Abstract
+![chair](https://user-images.githubusercontent.com/56816585/172114891-87849511-68ae-4811-ac93-ece6817bba9f.jpeg)
 
 Provide a brief overview of the project objhectives, approach, and results.
 
