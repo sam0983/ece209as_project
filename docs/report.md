@@ -13,16 +13,6 @@ Provide a brief overview of the project objhectives, approach, and results.
 
 # 1. Introduction
 
-This section should cover the following items:
-
-* Motivation & Objective: What are you trying to do and why? (plain English without jargon)
-* State of the Art & Its Limitations: How is it done today, and what are the limits of current practice?
-* Novelty & Rationale: What is new in your approach and why do you think it will be successful?
-* Potential Impact: If the project is successful, what difference will it make, both technically and broadly?
-* Challenges: What are the challenges and risks?
-* Requirements for Success: What skills and resources are necessary to perform the project?
-* Metrics of Success: What are metrics by which you would check for success?
-
   AIoT (Artiﬁcial Intelligence of Things) combines AI (Artiﬁcial Intelligence) and IoT (Internet of Things), AIoT can improve businesses and their services by creating more value out of IoT-generated data. However, there is often a trade-off between the cost and latency of transmitting data to the cloud and the accuracy of the edge device. The objective of this research project is to explore a method that may give us the best of both worlds, getting competitive accuracy while also keeping the cost and latency relatively low.<br />
 
   This project is mainly comprised of two research components, being DNN partitioning and model uncertainty quantification. DNN partitioning is a computation partitioning strategy that effectively leverage both the cycles in the cloud and on the mobile device to achieve low latency, low
@@ -78,11 +68,6 @@ If the uncertainty exceeds the threshold, it is deemed that the edge model is no
 
 
 # 4. Evaluation and Results
-1. slice from different layers and check the memory size being sent, and the data transmission time.
-2. try deep ensemble and mc dropout and compare
-3. tune uncertainty threshold.
-4. compute overall accuracy, overall memory sent.\
-
 
 <br />
 [Experimental Setup] 
@@ -126,7 +111,7 @@ can minimize the data transfer overhead. In the case of VGG19, taking latency an
 <br />
 The target dataset used in this research is CIFAR-10, it consists of 60000 32x32 colour images in 10 classes, with 6000 images per class. There are 50000 training images and 10000 test images. The VGG19 is pretrained on ImageNet, this dataset spans 1000 object classes and contains 1,281,167 training images, 50,000 validation images and 100,000 test images. The reason is that CIFAR-10 is a relatively small dataset, and many studies have shown that pretraining on a much bigger dataset yields better transfer learning results, as the generalized feature representations are similar and therefore transferrable. For all finetuning processes, SGD is used for optimization, with learning rate = 0.001, momentem = 0.9, and 5 epochs. The hyperparameters are kept constant during all finetuning processes. First, The unpartitioned VGG19 model is trained and is used as the baseline. The partitioned edge model and cloud model are also finetuned seperately, note that they are finetuned depending on MC Dropout or Deep Ensemble. For Deep Ensemble, three seperate models with randomly intialized weights are finetuned. The following table shows the finetuning results.
 <br />
-![Screen Shot 2022-06-05 at 11 53 39 PM](https://user-images.githubusercontent.com/56816585/172110737-14aa4f9f-09c4-452f-b294-26da043a9d30.png)
+![Screen Shot 2022-06-06 at 12 14 58 AM](https://user-images.githubusercontent.com/56816585/172113593-fa5beaa1-1fbb-401b-865e-de744056bc57.png)
 <br />
 It can be seen from the table that the edge models all have accuracies of 79- 80%, which is a noticable drop compared to the baseline. This is an expected outcome because it has fewer layers than the unpartitioned VGG19. An interesting finding is that all of the cloud models, regardless of the edge models, all achieve an accuracy of 85% (1% lower than baseline). This shows that making minor modifications to the model and freezing the weights from conv1_1 to conv4_4 does not cause a significantly negative impact on the classification performance.
 
