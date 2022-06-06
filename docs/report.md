@@ -87,44 +87,38 @@ If the uncertainty exceeds the threshold, it is deemed that the edge model is no
 <br />
 [Experimental Setup] 
 <br />
-The inference tests are all run on MacBook Air. Both the edge and cloud devices' codes are simultaneously implemented on the same MacBook. TCP/IP messaging protocal is utilized to transmit the intermediate output from the edge script to the cloud script. The data transmission is executed using Python's Pickle library as well as Socket programming. Model training is performed on Google Colab's GPU. Note that although the cloud and edge is run on Mac during inference, we automatically neglect the computation time of the cloud, as a lot of work have shown that the cloud GPU's computation time is so fast it's almost negligible.
+The inference tests are all run on MacBook Air. Both the edge and cloud devices' codes are simultaneously implemented on the same MacBook. TCP/IP messaging protocal is utilized to transmit the intermediate output from the edge script to the cloud script. The data transmission is executed using Python's Pickle library as well as Socket programming. Model training is performed on Google Colab's GPU. 
 <br />
 [DNN Partitioning] 
 <br />
 
-We first investigate the data and computation characteristics of each layer in VGG19. These characteristics provide insights to identify a better computation partitioning between mobile and cloud at the layer level. The convolution (conv) and fully-connected layers (fc) are the most time-consuming layers, representing over 90% of the total execution time. Convolution layers in the middle (conv3 and conv4) takes longer to execute than the early convolution layers (conv1 and conv2). Larger number of filters are applied by the convolution layers later in the DNN to progressively extract more robust and representative features, increasing the amount of computation. On the other hand, fully-connected layers are up to one magnitude slower than the convolution layers in the network. The most timeconsuming layer is the layer fc6, a fully-connected layer deep in the DNN, taking 45% of the total execution time. <br />
- The first three convolution
-layers (conv1, conv2 and conv3) generate large amounts of
-output data (shown as the largest dark bars) as they apply
+We first investigate the data and computation characteristics of each layer in VGG19. These characteristics provide insights to identify a better computation partitioning between mobile and cloud at the layer level. The convolution (conv) and fully-connected layers (linear) are the most time-consuming layers, representing over 90% of the total execution time. Larger number of filters are applied by the convolution layers later in the DNN to progressively extract more robust and representative features, increasing the amount of computation. On the other hand, fully-connected layers are up to one magnitude slower than the convolution layers in the network. The most timeconsuming layer is the layer linear1, a fully-connected layer deep in the DNN, taking 40% of the total execution time. <br />
+ The first four convolution
+layers (conv1_1, conv1_2, conv2_1 and conv2_2) generate large amounts of
+output data (shown as the largest blue bars) as they apply
 hundreds of filters over their input feature maps to extract
 interesting features. The data size stays constant through
-the activation layers (relu1 - relu5). The pooling layers
-sharply reduce the data size by up to 4.7× as they summarize
+the activation layers. The pooling layers
+sharply reduce the data size by up to 4.3× as they summarize
 regions of neighboring features by taking the maximum.
-The fully-connected layers deeper in the network (fc6 -
-fc8) gradually reduce the data size until the softmax layer
-(softmax) and argmax layer (argmax) at the end reduce the
-data to be one classification label.
+The fully-connected layers deeper in the network (linear1 -
+linear2) gradually reduce the data size until the softmax layer
+(softmax)at the end reduce the
+data to be one classification label. Time in the following graph refers to the time it takes for transferring the output of that layer
+to the cloud via wireless network. It is also observed that the data transmission time follows a similar trend of the corresponding output size, which is reasonable because data size should be positively related to its transmission time.
 <br />
 <img width="691" alt="Screen Shot 2022-06-04 at 6 15 58 PM" src="https://user-images.githubusercontent.com/56816585/172030841-5a6133fd-4167-4e2f-ada9-5327f39d3f64.png">
 <br />
-Each bar in Figure 6a represents the end-to-end latency
-of AlexNet, partitioned after each layer. Similarly, each bar
-in Figure 6b represents the mobile energy consumption of
-Alexnet, partitioned after each layer. Partitioning computation after a specific layer means executing the DNN on the
-mobile up to that layer, transferring the output of that layer
-to the cloud via wireless network, and executing the remaining layers in the cloud. The leftmost bar represents sending the original input for cloud-only processing. As partition
+The leftmost bar represents sending the original input for cloud-only processing. As partition
 point moves from left to right, more layers are executed on
 the mobile device thus there is an increasingly larger mobile
-processing component. The rightmost bar is the latency of
+processing component. The rightmost bar represents
 executing the entire DNN locally on the mobile device.
-Partition for Latency – If partitioning at the front-end, the
-data transfer dominates the end-to-end latency, which is consistent with our observation in Section 4.2 that the data size
+If partitioning at the front-end, the
+data transmission time is very high, which is consistent with our observation that the data size
 is the largest at the early stage of the DNN. Partitioning at the
 back-end provides better performance since the application
-can minimize the data transfer overhead, while taking advantage of the powerful server to execute the more computeheavy layers at the back-end. In the case of AlexNet using the mobile GPU and Wi-Fi, partitioning between the
-last pooling layer (pool5) and the first fully-connected
-layer (fc6) achieves the lowest latency, as marked in Figure 6a, improving 2.0× over cloud-only processing.
+can minimize the data transfer overhead. In the case of VGG19, taking latency and data transmission size into considerationn, partitioning between the pooling layer after conv4_4 and conv5_1 is the optimal choice, reducing data transmission size by 34% over cloud-only processing. In addition, we discover that the edge model size is only 40.7 MB, while the size of the entire VGG19 is 548.5 MB, making over-the-air updates much more plausible. 
 <br />
 [Model Finetuning] 
 <br />
@@ -138,6 +132,7 @@ From these results, it is shown that MC Dropout has a more reliable method, as w
 <br />
 [System Evaluation] 
 <br />
+tune the threshold and evaluate the overaall memory sent as well as the overall accuracy, compare it to baseline.
 
 
 # 5. Discussion and Conclusions
