@@ -10,8 +10,6 @@
 # Abstract
 
 Provide a brief overview of the project objhectives, approach, and results.
-![Screen Shot 2022-06-06 at 12 14 58 AM](https://user-images.githubusercontent.com/56816585/172114950-aae52148-d2da-4450-9085-bd4cd2699ec2.png)
-
 # 1. Introduction
 
   AIoT (Artiﬁcial Intelligence of Things) combines AI (Artiﬁcial Intelligence) and IoT (Internet of Things), AIoT can improve businesses and their services by creating more value out of IoT-generated data. However, there is often a trade-off between the cost and latency of transmitting data to the cloud and the accuracy of the edge device. The objective of this research project is to explore a method that may give us the best of both worlds, getting competitive accuracy while also keeping the cost and latency relatively low.<br />
@@ -111,6 +109,9 @@ can minimize the data transfer overhead. In the case of VGG19, taking latency an
 [Model Finetuning] 
 <br />
 The target dataset used in this research is CIFAR-10, it consists of 60000 32x32 colour images in 10 classes, with 6000 images per class. There are 50000 training images and 10000 test images. The VGG19 is pretrained on ImageNet, this dataset spans 1000 object classes and contains 1,281,167 training images, 50,000 validation images and 100,000 test images. The reason is that CIFAR-10 is a relatively small dataset, and many studies have shown that pretraining on a much bigger dataset yields better transfer learning results, as the generalized feature representations are similar and therefore transferrable. For all finetuning processes, SGD is used for optimization, with learning rate = 0.001, momentem = 0.9, and 5 epochs. The hyperparameters are kept constant during all finetuning processes. First, The unpartitioned VGG19 model is trained and is used as the baseline. The partitioned edge model and cloud model are also finetuned seperately, note that they are finetuned depending on MC Dropout or Deep Ensemble. For Deep Ensemble, three seperate models with randomly intialized weights are finetuned. The following table shows the finetuning results.
+
+![Screen Shot 2022-06-06 at 12 14 58 AM](https://user-images.githubusercontent.com/56816585/172114950-aae52148-d2da-4450-9085-bd4cd2699ec2.png)
+
 <br />
 ![Screen Shot 2022-06-06 at 12 14 58 AM](https://user-images.githubusercontent.com/56816585/172113593-fa5beaa1-1fbb-401b-865e-de744056bc57.png)
 <br />![Screen Shot 2022-06-06 at 12 14 58 AM](https://user-images.githubusercontent.com/56816585/172114816-ef8dbf9e-daea-47e5-a359-9c054981481e.png)
