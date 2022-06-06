@@ -113,8 +113,6 @@ The target dataset used in this research is CIFAR-10, it consists of 60000 32x32
 ![Screen Shot 2022-06-06 at 12 14 58 AM](https://user-images.githubusercontent.com/56816585/172114950-aae52148-d2da-4450-9085-bd4cd2699ec2.png)
 
 <br />
-![Screen Shot 2022-06-06 at 12 14 58 AM](https://user-images.githubusercontent.com/56816585/172113593-fa5beaa1-1fbb-401b-865e-de744056bc57.png)
-<br />![Screen Shot 2022-06-06 at 12 14 58 AM](https://user-images.githubusercontent.com/56816585/172114816-ef8dbf9e-daea-47e5-a359-9c054981481e.png)
 
 It can be seen from the table that the edge models all have accuracies of 79- 80%, which is a noticable drop compared to the baseline. This is an expected outcome because it has fewer layers than the unpartitioned VGG19. An interesting finding is that all of the cloud models, regardless of the edge models, all achieve an accuracy of 85% (1% lower than baseline). This shows that making minor modifications to the model and freezing the weights from conv1_1 to conv4_4 does not cause a significantly negative impact on the classification performance.
 
@@ -123,7 +121,9 @@ It can be seen from the table that the edge models all have accuracies of 79- 80
 <br />
 Experiments are conducted to compare the performances of MC Dropout and Deep Ensemble. Since the logic of the sytem is to only send data to the cloud when uncertainty is higher than a threshold, the objective should be to keep the samples sent to the cloud as low as possible while maintaining the accuracy of the edge model. We develop a strategy for choosing the superior model uncertainty quantification method. By tuning the thresholds of both approaches so that the number of data sent to the cloud is approximately the same, the one with higher accuracy in "certain" classifications is the better method. The reason for this is because if model uncertainty is low yet the classifications are not accurate, it is an indication that the calculated model uncertainty is not reliable. The figure below compares the performance of MC Dropout and Deep Ensemble.
 <br />
-From these results, it is shown that MC Dropout has a more reliable method, as when both methods deem approximately 6000 data samples to be certain, the accuracy of these 6000 samples is 97% using MC Dropout, whereas it is 95% using Deep Ensemble. Another notable observation from this experiment is the trade-off between accuracy and the number of data sent to cloud. It is noticed that during parameter tuning, the higher the accuracy of model uncertainty quantification, the more data are seen as uncertain and sent to cloud, increasing data transmission.
+![Screen Shot 2022-06-06 at 12 48 46 AM](https://user-images.githubusercontent.com/56816585/172118569-27817415-482f-4815-ba8f-7b1ceacd885b.png)
+
+From these results, it is shown that although both approaches have good performances, MC Dropout is a relatively more reliable method, as when both methods deem approximately 5000 data samples to be certain, the accuracy of these 5000 samples is 97.2% using MC Dropout, whereas it is 97.0% using Deep Ensemble. Another reason to choose MC Dropout is that it only requires one model, while Deep Ensemble needs multiple models, which occupies more memory space. Furthermore, a notable observation from this experiment is the trade-off between accuracy and the number of data sent to cloud. It is noticed that during parameter tuning, the higher the accuracy of model uncertainty quantification, the more data are seen as uncertain and sent to cloud, increasing data transmission.
 <br />
 [System Evaluation] 
 <br />
