@@ -107,7 +107,10 @@ linear2) gradually reduce the data size until the softmax layer
 data to be one classification label. Time in the following graph refers to the time it takes for transferring the output of that layer
 to the cloud via wireless network. It is also observed that the data transmission time follows a similar trend of the corresponding output size, which is reasonable because data size should be positively related to its transmission time.
 <br />
-<img width="691" alt="Screen Shot 2022-06-04 at 6 15 58 PM" src="https://user-images.githubusercontent.com/56816585/172030841-5a6133fd-4167-4e2f-ada9-5327f39d3f64.png">
+
+![dnn_plt](https://user-images.githubusercontent.com/56816585/172106836-0859e228-e691-4272-b2f8-ed6fe8f1a4c1.png)
+![latency](https://user-images.githubusercontent.com/56816585/172106850-3d827993-254b-40cd-ae39-0c286dc74cea.png)
+
 <br />
 The leftmost bar represents sending the original input for cloud-only processing. As partition
 point moves from left to right, more layers are executed on
