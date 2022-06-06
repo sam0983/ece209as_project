@@ -63,7 +63,7 @@ The epsilon in the equation prevents a division by 0, which is mathematically no
 For this research, we employ the VGG19 CNN architecture because it is a well documented and effective deep learning model for image classification, so it serves as a suitable DNN model to test our hypothesis. It consists of 16 convolutional layers followed by two fully-connected layers, and finally a softmax layer for classification. The following figure shows the components of the VGG19. <br />
 ![Screen Shot 2022-06-03 at 9 12 34 PM](https://user-images.githubusercontent.com/56816585/171982169-7f534479-dc88-4e3d-aef1-517a207bb448.png)
 <br />
-As shown from the figure below, DNN parititioning is performed between conv3_1 and conv3_2, indicating that the edge device is responsible for the computations from conv1_1 to conv3_1, whereas the cloud device computes conv3_2 to the softmax layer to output the final classfication results.
+As shown from the figure below, DNN parititioning is performed between conv3_1 and conv3_2 (just for illustration), indicating that the edge device is responsible for the computations from conv1_1 to conv3_1, whereas the cloud device computes conv3_2 to the softmax layer to output the final classfication results.
 <br />
 ![Screen Shot 2022-06-03 at 9 24 28 PM](https://user-images.githubusercontent.com/56816585/171982639-7ae299b1-33fb-4c8c-95a7-fc2505a03042.png)
 <br />
@@ -112,22 +112,26 @@ to the cloud via wireless network. It is also observed that the data transmissio
 ![latency](https://user-images.githubusercontent.com/56816585/172106850-3d827993-254b-40cd-ae39-0c286dc74cea.png)
 
 <br />
-The leftmost bar represents sending the original input for cloud-only processing. As partition
+The leftmost bar (input) represents sending the original input for cloud-only processing. As partition
 point moves from left to right, more layers are executed on
-the mobile device thus there is an increasingly larger mobile
-processing component. The rightmost bar represents
+the mobile device. The rightmost bar represents
 executing the entire DNN locally on the mobile device.
 If partitioning at the front-end, the
 data transmission time is very high, which is consistent with our observation that the data size
 is the largest at the early stage of the DNN. Partitioning at the
 back-end provides better performance since the application
-can minimize the data transfer overhead. In the case of VGG19, taking latency and data transmission size into considerationn, partitioning between the pooling layer after conv4_4 and conv5_1 is the optimal choice, reducing data transmission size by 34% over cloud-only processing. In addition, we discover that the edge model size is only 40.7 MB, while the size of the entire VGG19 is 548.5 MB, making over-the-air updates much more plausible. 
+can minimize the data transfer overhead. In the case of VGG19, taking latency and data transmission size into considerationn, partitioning between the pooling layer after conv4_4 and conv5_1 is the optimal choice, reducing data transmission size by 34% over cloud-only processing. In addition, we discover that the edge model size is only 40.7 MB, while the size of the entire VGG19 is 548.5 MB, making over-the-air updates much more plausible compared to edge-only processing. 
 <br />
 [Model Finetuning] 
 <br />
-The target dataset used in this research is CIFAR-10, it consists of 60000 32x32 colour images in 10 classes, with 6000 images per class. There are 50000 training images and 10000 test images. The VGG19 is pretrained on ImageNet, this dataset spans 1000 object classes and contains 1,281,167 training images, 50,000 validation images and 100,000 test images. The reason is that CIFAR-10 is a relatively small dataset, and many studies have shown that pretraining on a much bigger dataset yields better transfer learning results, as the generalized feature representations are similar and therefore transferrable. first train whole model for baseline. then train edge model based on mc dropout of deep ensemble. then train the cloud model with intermediate output of edge model as input. compare it with the baseline.
+The target dataset used in this research is CIFAR-10, it consists of 60000 32x32 colour images in 10 classes, with 6000 images per class. There are 50000 training images and 10000 test images. The VGG19 is pretrained on ImageNet, this dataset spans 1000 object classes and contains 1,281,167 training images, 50,000 validation images and 100,000 test images. The reason is that CIFAR-10 is a relatively small dataset, and many studies have shown that pretraining on a much bigger dataset yields better transfer learning results, as the generalized feature representations are similar and therefore transferrable. For all finetuning processes, SGD is used for optimization, with learning rate = 0.001, momentem = 0.9, and 5 epochs. The hyperparameters are kept constant during all finetuning processes. First, The unpartitioned VGG19 model is trained and is used as the baseline. The partitioned edge model and cloud model are also finetuned seperately, note that they are finetuned depending on MC Dropout or Deep Ensemble. For Deep Ensemble, three seperate models with randomly intialized weights are finetuned. The following table shows the finetuning results.
 <br />
-[Deep Ensemble] 
+ ![Screen Shot 2022-06-05 at 11 53 39 PM](https://user-images.githubusercontent.com/56816585/172110737-14aa4f9f-09c4-452f-b294-26da043a9d30.png)
+<br />
+It can be seen from the table that the edge models all have accuracies of 79- 80%, which is a noticable drop compared to the baseline. This is an expected outcome because it has fewer layers than the unpartitioned VGG19. An interesting finding is that all of the cloud models, regardless of the edge models, all achieve an accuracy of 85% (1% lower than baseline). This shows that making minor modifications to the model and freezing the weights from conv1_1 to conv4_4 does not cause a significantly negative impact on the classification performance.
+
+<br />
+[Model Uncertainty Quantification] 
 <br />
 Experiments are conducted to compare the performances of MC Dropout and Deep Ensemble. Since the logic of the sytem is to only send data to the cloud when uncertainty is higher than a threshold, the objective should be to keep the samples sent to the cloud as low as possible while maintaining the accuracy of the edge model. We develop a strategy for choosing the superior model uncertainty quantification method. By tuning the thresholds of both approaches so that the number of data sent to the cloud is approximately the same, the one with higher accuracy in "certain" classifications is the better method. The reason for this is because if model uncertainty is low yet the classifications are not accurate, it is an indication that the calculated model uncertainty is not reliable. The figure below compares the performance of MC Dropout and Deep Ensemble.
 <br />
