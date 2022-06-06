@@ -129,6 +129,7 @@ From these results, it is shown that although both approaches have good performa
 <br />
 tune the threshold and evaluate the overaall memory sent as well as the overall accuracy, compare it to baseline.
 After extensive experimentation, we have established the overall structure of the system. The edge model consists of conv1_1 to the maxpool layer after conv4_4 of the VGG19, while the cloud model consists of conv5_1 to the final sofmax layer. MC Dropout is used for model uncertainty quantification to distinguish certain and uncertain classifications. For the final evaluation, one of the metrics of success will be the overall accuracy, being the combined accuracy of the edge model's classifications on certain data samples and the cloud model's classifications on uncertain data samples. The second metric is the total number of data samples sent to the cloud, because reducing data sent to the cloud also saves data transmission cost. The ultimate goal is to achieve an accuracy comparable to that of the unpartitioned VGG19 while reducing the amount of data sent to the cloud. The results are shown in the table below.
+![Screen Shot 2022-06-06 at 2 21 43 AM](https://user-images.githubusercontent.com/56816585/172133613-61017aa0-b8f2-4376-84d4-f074d015c8ff.png)
 
 
 # 5. Discussion and Conclusions
