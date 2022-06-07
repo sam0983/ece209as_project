@@ -133,5 +133,13 @@ After extensive experimentation, we have established the overall structure of th
 From the table above, it is seen that the accuracy of our system matches that of the baseline when p=0.01, and it deteriorates as p increases. The cause of this is quite intuitive, as when the tolerance for uncertainty is low, the ones deemed to be certain have a higher chance of being correct. However, there is also a trade-off between accuracy and data transfer as seen in the table, where good accuracy comes with the expense of sending more data to the cloud for further computation.
 
 # 5. Discussion and Conclusions
+[Discussion]<br />
 
+
+[Conclusion] <br />
+In this project, we propose a strategy that utilizes model uncertainty to intelligently calculate the confidence of the edge model classification, the system then determines the trustworthiness of the edge model to decide whether it is necessary to send the sample to the cloud for a more accurate classification using the rest of the deep neural network. This novel approach
+effectively reduces data transmission, where DNN partitioning compresses the  memory size per sample, while the model uncertainty gate reduces the data transfer instances. We evaluated our method on the CIFAR-10 dataset using VGG19 
+and compared the results against the status quo approaches. The results show that our method drastically reduces data transmission, while achieving an accuracy that is comparable to that 
+of the unpartitioned VGG19. With these encouraging results, our investigation suggests that exploiting the traits of DNN partitioning and model uncertainty as well as their associated models has great potential
+for improving the efficacy of mobile edge to cloud AIoT systems.
 # 6. References
