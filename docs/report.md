@@ -134,7 +134,9 @@ From the table above, it is seen that the accuracy of our system matches that of
 
 # 5. Discussion and Conclusions
 [Discussion]<br />
-
+There are still challenges and obstacles that could constrain the practical application of our method. In this section, we discuss the limitations and potential future extensions of our work.
+<br />
+An obvious problem to this approach is that the parameter selections are quite heuristic. As seen from the experiments, we first determine the partitioning layer based on latency and transmission size. We then decide whether to use MC Dropout or Deep Ensemble. Finally, we tune the model uncertainty threshold to obtain the best performance. For future work, we hope to make this process end-to-end, such as automatically finding the optimal partitioning layer as well as setting the threshold to obtain high accuracy while keeping the data transmission low.
 
 [Conclusion] <br />
 In this project, we propose a strategy that utilizes model uncertainty to intelligently calculate the confidence of the edge model classification, the system then determines the trustworthiness of the edge model to decide whether it is necessary to send the sample to the cloud for a more accurate classification using the rest of the deep neural network. This novel approach
