@@ -67,6 +67,7 @@ If the uncertainty exceeds the threshold, it is deemed that the edge model is no
 
 
 # 4. Evaluation and Results
+The evaluation metric of the overall system should be the total data memory size that is transferred, being the combined memory size of the data sent from the edge to cloud, as well as the edge model size which is sent to the edge device. The results would depend on ratio of the size of the dataset to the size of the edge model. In this research, we would be focusing on minimizing the data send to the cloud as well as reducing the edge model size through DNN partitioning.
 
 <br />
 [Experimental Setup] 
