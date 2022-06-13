@@ -27,8 +27,11 @@ energy consumption, and high datacenter throughput for deep learning application
 
 # 2. Related Work
 [DNN partitioning] <br />
-Recent advances in deep neural networks (DNNs) have greatly improved the accuracy and speed of a variety of artificial intelligence applications. However, one dilemma is that DNN inference causes heavy computation burden to edge devices, but offloading inference tasks to the cloud imposes transmission of a large amount of data. Inspired by the fact that the data size of some intermediate outputs of DNN layers is much smaller than that of raw input data, DNN partitioning is implemented, which allows partitioned DNN processed at both the cloud and and mobile edge while reducing the data transmission. There are many works that focus on intelligently 
+Recent advances in deep neural networks (DNNs) have greatly improved the accuracy and speed of a variety of artificial intelligence applications. However, one dilemma is that DNN inference causes heavy computation burden to edge devices, but offloading inference tasks to the cloud imposes transmission of a large amount of data. Inspired by the fact that the data size of some intermediate outputs of DNN layers is much smaller than that of raw input data, DNN partitioning is implemented, which allows partitioned DNN processed at both the cloud and and mobile edge while reducing the data transmission. There are many works that focus on intelligently partitioning the computations to obtain optimal performance. Kang et al designed a
+lightweight scheduler to automatically partition DNN computation between mobile devices and datacenters at the granularity of neural network layers. 
+Hu, Chuang, et al designed a dynamice adaptive DNN surgery scheme that takes into account that state-of-the-art DNNs are characterized by a directed acyclic graph, optimally partitioning the DNN under different network conditions. Kwon et al designs a DNN accelerator built with a set of modular and configurable building blocks that can easily support myriad DNN partitions and mappings by appropriately configuring tiny switches, providing better utilization across multiple dataflow mappings. 
 [Model Uncertainty] <br />
+
 # 3. Technical Approach
 [DNN partitioning] <br />
 The common wisdom is that computation resources of edge devices are limited, and cannot handle  large amount of computation with reasonable latency. As a result, edge-only approaches often use lightweight models (eg. SqueezeNet) but has less accuracy than that of deeper models (VGG-19, ResNet-152). Another problem with edge-only approaches is that even if the edge device is capable of heavy computation, the memory and latency of updating a new model to the edge can require large data transfers. For instance, with AlexNet, this would require 240MB of communication from the server to the edge. In contrast, cloud-only approaches avoid these issues, yet sending raw data such as images to the cloud can cost a significant amount of money due to its large memory size. <br />
@@ -148,3 +151,6 @@ and compared the results against the status quo approaches. The results show tha
 of the unpartitioned VGG19. With these encouraging results, our investigation suggests that exploiting the traits of DNN partitioning and model uncertainty as well as their associated models has great potential
 for improving the efficacy of mobile edge to cloud AIoT systems.
 # 6. References
+Hu, Chuang, et al. "Dynamic adaptive DNN surgery for inference acceleration on the edge." IEEE INFOCOM 2019-IEEE Conference on Computer Communications. IEEE, 2019. <br />
+Kwon, Hyoukjun, Ananda Samajdar, and Tushar Krishna. "Maeri: Enabling flexible dataflow mapping over dnn accelerators via reconfigurable interconnects." ACM SIGPLAN Notices 53.2 (2018): 461-475. <br />
+Kang, Yiping, et al. "Neurosurgeon: Collaborative intelligence between the cloud and mobile edge." ACM SIGARCH Computer Architecture News 45.1 (2017): 615-629. <br />
