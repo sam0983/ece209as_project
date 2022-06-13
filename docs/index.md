@@ -9,6 +9,6 @@ AIoT (Artiﬁcial Intelligence of Things) is a relatively new term that has rece
 # Required Submissions
 
 * [Proposal](proposal)
-* [Midterm Checkpoint Presentation Slides](http://)
+* [Midterm Checkpoint Presentation Slides](https://docs.google.com/presentation/d/1rFsgZz4VVQj-qDK4SGONho1EWX9YM7-smU19nFervew/edit?usp=sharing)
 * [Final Presentation Slides](https://docs.google.com/presentation/d/1rFsgZz4VVQj-qDK4SGONho1EWX9YM7-smU19nFervew/edit?usp=sharing)
 * [Final Report](report)
